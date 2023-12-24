@@ -1,0 +1,70 @@
+#pragma once
+
+#include "../SDK/ClientMode.h"
+#include "../SDK/Entity.h"
+#include "../SDK/UserCmd.h"
+#include "../SDK/LocalPlayer.h"
+#include "../SDK/Vector.h"
+
+enum class FrameStage;
+class GameEvent;
+struct ImDrawList;
+struct ViewSetup;
+
+namespace Misc
+{
+    std::string bombSiteCeva = "";
+    bool isInChat() noexcept;
+    void gatherDataOnTick(UserCmd* cmd) noexcept;
+    void handleKeyEvent(int keynum, const char* currentBinding) noexcept;
+    void drawPlayerList() noexcept;
+    void viewModelChanger(ViewSetup* setup) noexcept;
+    void drawAutoPeek(ImDrawList* drawList) noexcept;
+    void autoPeek(UserCmd* cmd, Vector currentViewAngles) noexcept;
+    void forceRelayCluster() noexcept;
+    void initHiddenCvars() noexcept;
+    void unlockHiddenCvars() noexcept;
+    void fakeDuck(UserCmd* cmd, bool& sendPacket) noexcept;
+    void edgejump(UserCmd* cmd) noexcept;
+    void slowwalk(UserCmd* cmd) noexcept;
+    void inverseRagdollGravity() noexcept;
+    void updateClanTag(bool = false) noexcept;
+    void spectatorList() noexcept;
+    void noscopeCrosshair(ImDrawList* drawlist) noexcept;
+    void watermark() noexcept;
+    void prepareRevolver(UserCmd*) noexcept;
+    void fastPlant(UserCmd*) noexcept;
+    void fastStop(UserCmd*) noexcept;
+    void drawBombTimer() noexcept;
+    void hurtIndicator() noexcept;
+    void stealNames() noexcept;
+    void disablePanoramablur() noexcept;
+    bool changeName(bool, const char*, float) noexcept;
+    void bunnyHop(UserCmd*) noexcept;
+    void fixTabletSignal() noexcept;
+    void killfeedChanger(GameEvent& event) noexcept;
+    void killMessage(GameEvent& event) noexcept;
+    void fixMovement(UserCmd* cmd, float yaw) noexcept;
+    void antiAfkKick(UserCmd* cmd) noexcept;
+    void fixAnimationLOD(FrameStage stage) noexcept;
+    void autoPistol(UserCmd* cmd) noexcept;
+    void autoReload(UserCmd* cmd) noexcept;
+    void revealRanks(UserCmd* cmd) noexcept;
+    void indicators() noexcept;
+    void customScope() noexcept;
+    void autoStrafe(UserCmd* cmd, Vector& currentViewAngles) noexcept;
+    void removeCrouchCooldown(UserCmd* cmd) noexcept;
+    void moonwalk(UserCmd* cmd) noexcept;
+    void playHitSound(GameEvent& event) noexcept;
+    void killSound(GameEvent& event) noexcept;
+    void autoBuy(GameEvent* event) noexcept;
+    void preserveKillfeed(bool roundStart = false) noexcept;
+    void voteRevealer(GameEvent& event) noexcept;
+    void chatRevealer(GameEvent& event, GameEvent* events) noexcept;
+    void drawOffscreenEnemies(ImDrawList* drawList) noexcept;
+    void fastLadder(UserCmd* cmd) noexcept;
+    void autoAccept(const char* soundEntry) noexcept;
+
+    void updateInput() noexcept;
+    void reset(int resetType) noexcept;
+}
