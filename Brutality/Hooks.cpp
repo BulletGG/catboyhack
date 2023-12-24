@@ -177,7 +177,6 @@ static void __stdcall paintTraverse(unsigned int panel, bool forceRepaint, bool 
 static HRESULT __stdcall present(IDirect3DDevice9* device, const RECT* src, const RECT* dest, HWND windowOverride, const RGNDATA* dirtyRegion) noexcept
 {
     [[maybe_unused]] static bool imguiInit{ ImGui_ImplDX9_Init(device) };
-    PostProcessing::setDevice(device);
     ImGui_ImplDX9_NewFrame();
     ImGui_ImplWin32_NewFrame();
     ImGui::NewFrame();

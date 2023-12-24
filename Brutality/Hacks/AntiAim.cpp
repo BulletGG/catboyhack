@@ -112,7 +112,7 @@ void AntiAim::rage(UserCmd* cmd, const Vector& previousViewAngles, const Vector&
                 pitcher = 89.f;
             cmd->viewangles.x = pitcher;
         }
-            break;
+        break;
         case 5: //random
             cmd->viewangles.x = RandomFloat(-89, 89, 1.f);
             break;
@@ -120,6 +120,7 @@ void AntiAim::rage(UserCmd* cmd, const Vector& previousViewAngles, const Vector&
             break;
         }
     }
+
     static bool invert = true;
     if (cmd->viewangles.y == currentViewAngles.y || Tickbase::isShifting())
     {
@@ -318,14 +319,14 @@ void AntiAim::rage(UserCmd* cmd, const Vector& previousViewAngles, const Vector&
                     if (config->rageAntiAim[Condition::getState(cmd)].desync.peekMode != 3)
                         yaw -= flipJitter ? config->rageAntiAim[Condition::getState(cmd)].jitterRange : -config->rageAntiAim[Condition::getState(cmd)].jitterRange;
                     else if (config->rageAntiAim[Condition::getState(cmd)].desync.peekMode == 3)
-                        yaw -= invert ? config->rageAntiAim[Condition::getState(cmd)].jitterRange : -config->rageAntiAim[Condition::getState(cmd)].jitterRange;                    
+                        yaw -= invert ? config->rageAntiAim[Condition::getState(cmd)].jitterRange : -config->rageAntiAim[Condition::getState(cmd)].jitterRange;
                 }
                 break;
             case 2: //offset jitter
                 if (!isManualSet && isFreestanding == false && !willgetstabbed)
                     yaw += flipJitter ? !config->binds.desyncInvert.isActive() ? config->rageAntiAim[Condition::getState(cmd)].jitterRange : -config->rageAntiAim[Condition::getState(cmd)].jitterRange : 0;
                 break;
-            case 3:
+            case 3: //3way
                 if (!isManualSet && isFreestanding == false && !willgetstabbed)
                 {
                     static int stage = 0;
@@ -348,6 +349,32 @@ void AntiAim::rage(UserCmd* cmd, const Vector& previousViewAngles, const Vector&
                         stage = 0; //fix for invalid stage
                 }
                 break;
+            case 4: //3way with 3way pitch?
+                if (!isManualSet && isFreestanding == false && !willgetstabbed)
+                {
+                    static int stage = 0;
+                    if (stage == 0)
+                    {
+                        yaw -= config->rageAntiAim[Condition::getState(cmd)].jitterRange;
+                        cmd->viewangles.x = -89.f;
+                        stage = 1;
+                    }
+                    else if (stage == 1)
+                    {
+                        yaw += 0;
+                        cmd->viewangles.x = 0.f;
+                        stage = 2;
+                    }
+                    else if (stage == 2)
+                    {
+                        yaw += config->rageAntiAim[Condition::getState(cmd)].jitterRange;
+                        cmd->viewangles.x = 89.f;
+                        stage = 0;
+                    }
+                    else
+                        stage = 0; //fix for invalid stage
+                }
+                break;
             default:
                 break;
             }
@@ -361,7 +388,7 @@ void AntiAim::rage(UserCmd* cmd, const Vector& previousViewAngles, const Vector&
                 if (getGameMode() != GameMode::Competitive && gameRules->isValveDS())
                     return;
 
-            bool isInvertToggled = config->binds.desyncInvert.isActive();            
+            bool isInvertToggled = config->binds.desyncInvert.isActive();
             if (config->rageAntiAim[Condition::getState(cmd)].desync.peekMode != 3)
                 invert = isInvertToggled;
             float leftDesyncAngle = config->rageAntiAim[Condition::getState(cmd)].desync.leftLimit * 2.f;
@@ -372,7 +399,7 @@ void AntiAim::rage(UserCmd* cmd, const Vector& previousViewAngles, const Vector&
             case 0:
                 break;
             case 1: // Peek real
-                if(!isInvertToggled)
+                if (!isInvertToggled)
                     invert = !autoDirection(cmd->viewangles);
                 else
                     invert = autoDirection(cmd->viewangles);
@@ -457,7 +484,7 @@ bool AntiAim::canRun(UserCmd* cmd) noexcept
 {
     if (!localPlayer || !localPlayer->isAlive())
         return false;
-    
+
     updateLby(true); //Update lby timer
 
     if (config->disableInFreezetime && (!*memory->gameRules || (*memory->gameRules)->freezePeriod()))
@@ -493,7 +520,7 @@ bool AntiAim::canRun(UserCmd* cmd) noexcept
 
     if (activeWeapon->nextPrimaryAttack() <= memory->globalVars->serverTime() && (cmd->buttons & (UserCmd::IN_ATTACK)))
         return false;
-    
+
     if (activeWeapon->isKnife())
     {
         if (activeWeapon->nextSecondaryAttack() <= memory->globalVars->serverTime() && cmd->buttons & (UserCmd::IN_ATTACK2))

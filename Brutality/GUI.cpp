@@ -322,7 +322,7 @@ void GUI::renderRageAntiAimWindow() noexcept
     ImGui::Checkbox("Disable in freeztime", &config->disableInFreezetime);
     ImGui::Combo("Pitch", &config->rageAntiAim[current_antiaim].pitch, "Off\0Down\0Zero\0Up\0Flick-up\0Random\0");
     ImGui::Combo("Yaw base", reinterpret_cast<int*>(&config->rageAntiAim[current_antiaim].yawBase), "Off\0Forward\0Backward\0Right\0Left\0Spin\0");
-    ImGui::Combo("Yaw modifier", reinterpret_cast<int*>(&config->rageAntiAim[current_antiaim].yawModifier), "Off\0Centered\0Offset\0Three way\0");
+    ImGui::Combo("Yaw modifier", reinterpret_cast<int*>(&config->rageAntiAim[current_antiaim].yawModifier), "Off\0Centered\0Offset\0Three way\0Idk 3way but also pitch\0");
     ImGui::PushItemWidth(220.0f);
     ImGui::SliderInt("Yaw add", &config->rageAntiAim[current_antiaim].yawAdd, -180, 180, "%d");
     ImGui::PopItemWidth();
