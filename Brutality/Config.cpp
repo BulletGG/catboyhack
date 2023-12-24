@@ -56,7 +56,7 @@ Config::Config() noexcept
         CoTaskMemFree(pathToDocuments);
     }
 
-    path /= "Brutality";
+    path /= "CatboyHack";
     listConfigs();
     visuals.playerModel[0] = '\0';
 

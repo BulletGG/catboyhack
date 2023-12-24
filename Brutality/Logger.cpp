@@ -260,7 +260,7 @@ void Logger::console() noexcept
 
     for (auto log : logs)
     {
-        Helpers::logConsole(c_xor("[Brutality] "), color);
+        Helpers::logConsole(c_xor("[CatboyHack] "), color);
         Helpers::logConsole(log.text + "\n");
     }
 

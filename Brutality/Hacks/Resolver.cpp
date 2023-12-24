@@ -169,7 +169,7 @@ void Resolver::processMissedShots() noexcept
 		if (AimbotFunction::hitboxIntersection(matrix, hitbox, set, snapshot.eyePosition, end))
 		{
 			resolverMissed = true;
-			std::string missed = "[Brutality] Missed " + entity->getPlayerName() + " due to resolver";
+			std::string missed = "[CatboyHack] Missed " + entity->getPlayerName() + " due to resolver";
 			if (snapshot.backtrackRecord > 0)
 				missed += "Backtrack[" + std::to_string(snapshot.backtrackRecord) + "]";
 			Logger::addLog(missed);
@@ -178,7 +178,7 @@ void Resolver::processMissedShots() noexcept
 		}
 	}
 	if (!resolverMissed)
-		Logger::addLog("[Brutality] Missed due to spread");
+		Logger::addLog("[CatboyHack] Missed due to spread");
 }
 
 void Resolver::runPreUpdate(Animations::Players player, Entity* entity) noexcept

@@ -557,17 +557,19 @@ void Misc::updateClanTag(bool tagChanged) noexcept
         wasEnabled = true;
         if (time != lastTime)
         {
-            switch (time % 9)
+            switch (time % 11)
             {
-            case 0: clanTag = ("❄ Brutality"); break;
-            case 1: clanTag = ("❄ y Brutalit"); break;
-            case 2: clanTag = ("❄ ty Brutali"); break;
-            case 3: clanTag = ("❄ ity Brutal"); break;
-            case 4: clanTag = ("❄ lity Bruta"); break;
-            case 5: clanTag = ("❄ ality Brut"); break;
-            case 6: clanTag = ("❄ tality Bru"); break;
-            case 7: clanTag = ("❄ utality Br"); break;
-            case 8: clanTag = ("❄ rutality B"); break;
+            case 0: clanTag = ("❄ CatboyHack"); break;
+            case 1: clanTag = ("❄ k CatboyHac"); break;
+            case 2: clanTag = ("❄ ck CatboyHa"); break;
+            case 3: clanTag = ("❄ ack CatboyH"); break;
+            case 4: clanTag = ("❄ Hack Catboy"); break;
+            case 5: clanTag = ("❄ yHack Catbo"); break;
+            case 6: clanTag = ("❄ oyHack Catb"); break;
+            case 7: clanTag = ("❄ boyHack Cat"); break;
+            case 8: clanTag = ("❄ tboyHack Ca"); break;
+            case 9: clanTag = ("❄ atboyHack C"); break;
+            case 10: clanTag = ("❄ CatboyHack"); break;
             }
         }
         lastTime = time;
