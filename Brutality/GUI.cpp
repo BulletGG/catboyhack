@@ -322,7 +322,7 @@ void GUI::renderRageAntiAimWindow() noexcept
     ImGui::Checkbox("Disable in freeztime", &config->disableInFreezetime);
     ImGui::Combo("Pitch", &config->rageAntiAim[current_antiaim].pitch, "Off\0Down\0Zero\0Up\0Flick-up\0Random\0");
     ImGui::Combo("Yaw base", reinterpret_cast<int*>(&config->rageAntiAim[current_antiaim].yawBase), "Off\0Forward\0Backward\0Right\0Left\0Spin\0");
-    ImGui::Combo("Yaw modifier", reinterpret_cast<int*>(&config->rageAntiAim[current_antiaim].yawModifier), "Off\0Centered\0Offset\0Three way\0Idk 3way but also pitch\0");
+    ImGui::Combo("Yaw modifier", reinterpret_cast<int*>(&config->rageAntiAim[current_antiaim].yawModifier), "Off\0Centered\0Offset\0Three way\0Idk 3way but also pitch");
     ImGui::PushItemWidth(220.0f);
     ImGui::SliderInt("Yaw add", &config->rageAntiAim[current_antiaim].yawAdd, -180, 180, "%d");
     ImGui::PopItemWidth();
@@ -1907,7 +1907,7 @@ void GUI::renderGuiStyle() noexcept
                 ImGui::BeginChild("##UP", ImVec2{ 700, 45 }, false);
                 {
                     ImGui::SetCursorPos(ImVec2{ 10, 6 });
-                    ImGui::PushFont(fonts.tahoma34); ImGui::Text("Better Osiris"); ImGui::PopFont();
+                    ImGui::PushFont(fonts.tahoma34); ImGui::Text("CatboyHack"); ImGui::PopFont();
 
                     float pos = 305;
                     pos += 80;
@@ -2075,7 +2075,7 @@ void GUI::renderGuiStyle() noexcept
                     ImGui::BeginChild("##Text", ImVec2{ 700, 20 }, false);
                     {
                         ImGui::SetCursorPos(ImVec2{ 2, 2 });
-                        ImGui::Text("Better Osiris Made In https://github.com/notgoodusename/OsirisAndExtra");
+                        ImGui::Text("CatboyHack by bullet.dev");
                     }
                     ImGui::EndChild();
                 }

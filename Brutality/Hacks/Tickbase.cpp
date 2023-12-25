@@ -36,6 +36,10 @@ void Tickbase::start(UserCmd* cmd) noexcept
     }
 
     auto activeWeapon = localPlayer->getActiveWeapon();
+
+    if (activeWeapon->itemDefinitionIndex2() == WeaponId::Knife || activeWeapon->itemDefinitionIndex2() == WeaponId::Taser || activeWeapon->itemDefinitionIndex2() == WeaponId::Fists || activeWeapon->itemDefinitionIndex2() == WeaponId::Snowball)
+        return;
+
     if (!activeWeapon)
     {
         if (hasHadTickbaseActive)
@@ -200,6 +204,7 @@ void Tickbase::resetTickshift() noexcept
     if (config->tickbase.teleport)
         ticksAllowedForProcessing = max(ticksAllowedForProcessing - tickShift, 0);
 	tickShift = 0;
+    chokedPackets = 0;
 }
 
 bool& Tickbase::isFinalTick() noexcept
