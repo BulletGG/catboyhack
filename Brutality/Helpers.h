@@ -18,6 +18,7 @@ namespace Helpers
     float simpleSpline(float value) noexcept;
     float simpleSplineRemapVal(float val, float A, float B, float C, float D) noexcept;
     float simpleSplineRemapValClamped(float val, float A, float B, float C, float D) noexcept;
+    void AngleVectors(Vector angles, Vector* forward, Vector* right, Vector* up);
     Vector lerp(float percent, Vector a, Vector b) noexcept;
     float lerp(float percent, float a, float b) noexcept;
     float bias(float x, float biasAmt) noexcept;
@@ -26,6 +27,7 @@ namespace Helpers
     float approach(float target, float value, float speed) noexcept;
     float approachValueSmooth(float target, float value, float fraction) noexcept;
     float angleDiff(float destAngle, float srcAngle) noexcept;
+    float normalize_pitch(float pitch);
     Vector approach(Vector target, Vector value, float speed) noexcept;
     float angleNormalize(float angle) noexcept;
     float approachAngle(float target, float value, float speed) noexcept;
@@ -53,10 +55,10 @@ namespace Helpers
     constexpr int utf8SeqLen(char firstByte) noexcept
     {
         return (firstByte & 0x80) == 0x00 ? 1 :
-               (firstByte & 0xE0) == 0xC0 ? 2 :
-               (firstByte & 0xF0) == 0xE0 ? 3 :
-               (firstByte & 0xF8) == 0xF0 ? 4 :
-               -1;
+            (firstByte & 0xE0) == 0xC0 ? 2 :
+            (firstByte & 0xF0) == 0xE0 ? 3 :
+            (firstByte & 0xF8) == 0xF0 ? 4 :
+            -1;
     }
 
     constexpr auto utf8Substr(char* start, char* end, int n) noexcept
@@ -74,7 +76,7 @@ namespace Helpers
 
     std::array<float, 3U> rainbowColor(float speed) noexcept;
     std::array<float, 4U> rainbowColor(float speed, float alpha) noexcept;
-    
+
     bool decodeVFONT(std::vector<char>& buffer) noexcept;
     std::vector<char> loadBinaryFile(const std::string& path) noexcept;
 

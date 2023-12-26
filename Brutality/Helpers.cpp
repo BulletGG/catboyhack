@@ -43,6 +43,17 @@ std::array<float, 3U> Helpers::rgbToHsv(float r, float g, float b) noexcept
     return { hue, sat, max };
 }
 
+float Helpers::normalize_pitch(float pitch)
+{
+    while (pitch > 89.0f)
+        pitch -= 180.0f;
+
+    while (pitch < -89.0f)
+        pitch += 180.0f;
+
+    return pitch;
+}
+
 std::array<float, 3U> Helpers::hsvToRgb(float h, float s, float v) noexcept
 {
     h = h < 0.0f ? std::fmodf(h, 1.0f) + 1.0f : std::fmodf(h, 1.0f);
@@ -123,6 +134,39 @@ float Helpers::simpleSplineRemapValClamped(float val, float A, float B, float C,
     return C + (D - C) * simpleSpline(cVal);
 }
 
+void Helpers::AngleVectors(Vector angles, Vector* forward, Vector* right, Vector* up) {
+    float angle;
+    static float sr, sp, sy, cr, cp, cy, cpi = (M_PI * 2 / 360);
+
+    angle = angles.x * cpi;
+    sy = sin(angle);
+    cy = cos(angle);
+    angle = angles.y * cpi;
+    sp = sin(angle);
+    cp = cos(angle);
+    angle = angles.z * cpi;
+    sr = sin(angle);
+    cr = cos(angle);
+
+    if (forward) {
+        forward->y = (cp * cy);
+        forward->x = cp * sy;
+        forward->z = -sp;
+    }
+
+    if (right) {
+        right->y = (-1 * sr * sp * cy + -1 * cr * -sy);
+        right->x = (-1 * sr * sp * sy + -1 * cr * cy);
+        right->z = -1 * sr * cp;
+    }
+
+    if (up) {
+        up->y = (cr * sp * cy + -sr * -sy);
+        up->x = (cr * sp * sy + -sr * cy);
+        up->z = cr * cp;
+    }
+}
+
 Vector Helpers::lerp(float percent, Vector a, Vector b) noexcept
 {
     return a + (b - a) * percent;
@@ -192,12 +236,12 @@ float Helpers::angleDiff(float destAngle, float srcAngle) noexcept
 {
     float delta = std::fmodf(destAngle - srcAngle, 360.0f);
 
-    if (destAngle > srcAngle) 
+    if (destAngle > srcAngle)
     {
         if (delta >= 180)
             delta -= 360;
     }
-    else 
+    else
     {
         if (delta <= -180)
             delta += 360;
@@ -236,10 +280,10 @@ float Helpers::angleNormalize(float angle) noexcept
 float Helpers::approachAngle(float target, float value, float speed) noexcept
 {
     auto anglemod = [](float a)
-    {
-        a = (360.f / 65536) * ((int)(a * (65536.f / 360.0f)) & 65535);
-        return a;
-    };
+        {
+            a = (360.f / 65536) * ((int)(a * (65536.f / 360.0f)) & 65535);
+            return a;
+        };
     target = anglemod(target);
     value = anglemod(value);
 
@@ -305,19 +349,6 @@ bool Helpers::worldToScreen(const Vector& in, ImVec2& out, bool floor) noexcept
 
 static float alphaFactor = 1.0f;
 
-unsigned int Helpers::calculateColor(Color4 color) noexcept
-{
-    color.color[3] *= (255.0f - GameData::local().flashDuration) / 255.0f;
-    color.color[3] *= std::clamp(alphaFactor, 0.0f, 1.0f);
-    auto&& [r, g, b, a] = color.color;
-    return ImGui::ColorConvertFloat4ToU32({ r, g, b, a });
-}
-
-unsigned int Helpers::calculateColor(Color3 color) noexcept
-{
-    auto&& [r, g, b] = color.color;
-    return ImGui::ColorConvertFloat4ToU32({ r, g, b, 1.0f });
-}
 
 unsigned int Helpers::calculateColor(int r, int g, int b, int a) noexcept
 {
@@ -369,7 +400,6 @@ ImWchar* Helpers::getFontGlyphRanges() noexcept
         builder.AddRanges(baseRanges);
         builder.AddRanges(ImGui::GetIO().Fonts->GetGlyphRangesCyrillic());
         builder.AddRanges(ImGui::GetIO().Fonts->GetGlyphRangesChineseSimplifiedCommon());
-        builder.AddRanges(ImGui::GetIO().Fonts->GetGlyphRangesChineseFull());
         builder.AddText("\u9F8D\u738B\u2122");
         builder.BuildRanges(&ranges);
     }
@@ -394,7 +424,7 @@ std::wstring Helpers::toUpper(std::wstring str) noexcept
         }
 
         return std::towupper(w);
-    });
+        });
     return str;
 }
 

@@ -180,6 +180,11 @@ struct Vector {
         return *this;
     }
 
+    Vector& Zero()
+    {
+        x = y = z = 0.0f;
+    }
+
     auto length() const noexcept
     {
         return std::sqrt(x * x + y * y + z * z);

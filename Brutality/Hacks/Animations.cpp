@@ -30,8 +30,8 @@ static bool gotMatrixFakelag{ false };
 static bool gotMatrixReal{ false };
 static Vector viewangles{};
 static Vector correctAngle{};
-static Vector sentAngle{};
 static int buildTransformsIndex = -1;
+static Vector sentViewangles{};
 static std::array<AnimationLayer, 13> staticLayers{};
 static std::array<AnimationLayer, 13> layers{};
 static float primaryCycle{ 0.0f };
@@ -127,10 +127,10 @@ void Animations::update(UserCmd* cmd, bool& _sendPacket) noexcept
     localPlayer->updateClientSideAnimation();
 
     std::memcpy(&layers, localPlayer->animOverlays(), sizeof(AnimationLayer) * localPlayer->getAnimationLayersCount());
-
+    if (sendPacket)
+        sentViewangles = cmd->viewangles;
     if (sendPacket)
     {
-        sentAngle = cmd->viewangles;
         std::memcpy(&sendPacketLayers, localPlayer->animOverlays(), sizeof(AnimationLayer) * localPlayer->getAnimationLayersCount());
         footYaw = localPlayer->getAnimstate()->footYaw;
         poseParameters = localPlayer->poseParameters();
@@ -213,7 +213,7 @@ void Animations::fake() noexcept
         memory->setAbsAngle(localPlayer.get(), Vector{ 0, fakeAnimState->footYaw, 0 });
         std::memcpy(localPlayer->animOverlays(), &layers, sizeof(AnimationLayer) * localPlayer->getAnimationLayersCount());
         localPlayer->getAnimationLayer(ANIMATION_LAYER_LEAN)->weight = std::numeric_limits<float>::epsilon();
-        
+
         gotMatrix = localPlayer->setupBones(fakematrix.data(), localPlayer->getBoneCache().size, 0x7FF00, memory->globalVars->currenttime);
         gotMatrixFakelag = gotMatrix;
         if (gotMatrix)
@@ -522,7 +522,7 @@ void Animations::handlePlayers(FrameStage stage) noexcept
             }
         }
 
-        std::memcpy(entity->animOverlays(), &layers, sizeof(AnimationLayer)* entity->getAnimationLayersCount());
+        std::memcpy(entity->animOverlays(), &layers, sizeof(AnimationLayer) * entity->getAnimationLayersCount());
 
         //Setupbones
         if (runPostUpdate)
@@ -671,7 +671,7 @@ int& Animations::buildTransformationsIndex() noexcept
 
 Vector* Animations::getCorrectAngle() noexcept
 {
-    return &sentAngle;
+    return &sentViewangles;
 }
 
 Vector* Animations::getViewAngles() noexcept

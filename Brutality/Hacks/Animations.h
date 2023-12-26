@@ -31,6 +31,7 @@ namespace Animations
 	int& buildTransformationsIndex() noexcept;
 
 	Vector* getCorrectAngle() noexcept;
+	Vector* getSentAngle() noexcept;
 	Vector* getViewAngles() noexcept;
 	Vector* getLocalAngle() noexcept;
 
@@ -73,12 +74,17 @@ namespace Animations
 		std::deque<Record> backtrackRecords;
 
 		std::array<matrix3x4, MAXSTUDIOBONES> matrix;
-		std::array<AnimationLayer, 13> layers { };
-		std::array<AnimationLayer, 13> oldlayers { };
+		std::array<AnimationLayer, 13> layers{ };
+		std::array<AnimationLayer, 13> oldlayers{ };
 
 		Vector mins{}, maxs{};
 		Vector origin{}, oldOrigin{}, absAngle{};
 		Vector velocity{}, oldVelocity{};
+
+		bool shot{ false };
+		float workingangle = 0.f;
+		int side{};
+		bool extended{ false };
 
 		float spawnTime{ 0.f };
 

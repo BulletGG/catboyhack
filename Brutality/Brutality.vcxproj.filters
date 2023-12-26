@@ -284,6 +284,9 @@
     <ClCompile Include="PostProcessing.cpp">
       <Filter>New shit\Post Processing</Filter>
     </ClCompile>
+    <ClCompile Include="Math.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GUI.h">
@@ -729,6 +732,9 @@
     </ClInclude>
     <ClInclude Include="PostProcessing.h">
       <Filter>New shit\Post Processing</Filter>
+    </ClInclude>
+    <ClInclude Include="Math.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
