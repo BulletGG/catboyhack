@@ -59,11 +59,12 @@ public:
     struct RagebotGlobal {
         bool enabled{ false };
         bool silent{ false };
-        int fov{ 0 }; //this will be 180 not 255.f
+        int ragefov{ 0 }; //this will be 180 not 255.f
         bool autoShot{ false };
         bool knifebot{ false };
         bool autoScope{ false };
     }ragebot;
+    std::array<RagebotGlobal, 5> rageBotGlobal;
 
     struct Ragebot {
         bool override{ false };

@@ -57,7 +57,7 @@ void runRagebot(UserCmd* cmd, Entity* entity, matrix3x4* matrix, Ragebot::Enemie
         {
             const auto angle{ AimbotFunction::calculateRelativeAngle(localPlayerEyePosition, bonePosition, cmd->viewangles + aimPunch) };
             const int fov{ (int)round(angle.length2D()) };
-            if (fov > cfg.fov)
+            if (fov > cfg.ragefov)
                 continue;
 
             float damage = AimbotFunction::getScanDamage(entity, bonePosition, activeWeapon->getWeaponData(), minDamage);

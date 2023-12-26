@@ -564,7 +564,7 @@ void Visuals::hitEffect(ImDrawList* drawList, GameEvent* event) noexcept
 
     if (config->visuals.hitEffect) {
         if (lastHitTime + config->visuals.hitEffectTime >= memory->globalVars->realtime) {
-            PostProcessing::performFullscreenChromaticAberration(drawList, (1.0f - (memory->globalVars->realtime - lastHitTime) / config->visuals.hitEffectTime) * 0.01f);
+            
         }
         else
             return;

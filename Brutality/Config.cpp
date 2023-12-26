@@ -224,7 +224,26 @@ static void from_json(const json& j, ImVec2& v)
 
 static void from_json(const json& j, Config::Ragebot& r)
 {
+    read(j, "override", r.override);
+    read(j, "mph", r.multiPointHead);
+    read(j, "mpb", r.multiPointBody);
+    read(j, "mindmg", r.minDamage);
+    read(j, "mindmgoverrideenable", r.dmgov);
+    read(j, "mindmgoverrideamount", r.minDamageOverride);
+    read(j, "as", r.autoStop);
+    read(j, "asm", r.autoStopMod);
+    read(j, "hitboxes", r.hitboxes);
+    read(j, "hc", r.hitChance);
+}
 
+static void from_json(const json& j, Config::RagebotGlobal& r)
+{
+    read(j, "enabled", r.enabled);
+    read(j, "silent", r.silent);
+    read(j, "ragefov", r.ragefov);
+    read(j, "autoshot", r.autoShot);
+    read(j, "autoscope", r.autoScope);
+    read(j, "knifebot", r.knifebot);
 }
 
 static void from_json(const json& j, Config::ConditionalAA& a)
@@ -624,7 +643,8 @@ void Config::load(const char8_t* name, bool incremental) noexcept
     if (!incremental)
         reset();
 
-    read(j, "RagebotCofnig", rageBot);
+    read(j, "RagebotConfig", rageBot);
+    read(j, "rageBotGobal", rageBotGlobal);
 
     read(j, "AA", rageAntiAim);
     read<value_t::object>(j, "CAA", condAA);
@@ -788,9 +808,28 @@ static void to_json(json& j, const ImVec2& o, const ImVec2& dummy = {})
     WRITE("Y", y);
 }
 
-static void to_json(json& j, const Config::Ragebot& o, const Config::Ragebot& dummy = {})
+static void to_json(json& j, const Config::Ragebot& o, const Config::Ragebot& dummy = {}) //gun specific thingys
 {
+        WRITE("override", override);
+        WRITE("mph", multiPointHead);
+        WRITE("mpb", multiPointBody);
+        WRITE("mindmg", minDamage);
+        WRITE("mindmgoverrideenable", dmgov);
+        WRITE("mindmgoverrideamount", minDamageOverride);
+        WRITE("as", autoStop);
+        WRITE("asm", autoStopMod);
+        WRITE("hitboxes", hitboxes);
+        WRITE("hitchance", hitChance);    
+}
 
+static void to_json(json& j, const Config::RagebotGlobal& o, const Config::RagebotGlobal& dummy = {}) //global ragebot shit idfk
+{
+        WRITE("enabled", enabled);
+        WRITE("silent", silent);
+        WRITE("ragefov", ragefov);
+        WRITE("autoshot", autoShot);
+        WRITE("autoscope", autoScope);
+        WRITE("knifebot", knifebot);    
 }
 
 static void to_json(json& j, const Config::Chams::Material& o)
@@ -1220,6 +1259,7 @@ void Config::save(size_t id) const noexcept
         json j;
 
         j["RagebotConfig"] = rageBot;
+        j["rageBotGlobal"] = rageBotGlobal;
 
         j["AA"] = rageAntiAim;
         j["CAA"] = condAA;

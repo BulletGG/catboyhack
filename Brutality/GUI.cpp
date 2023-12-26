@@ -277,7 +277,7 @@ void GUI::renderRagebotWindow() noexcept
 
     ImGui::NextColumn();
     ImGui::PushItemWidth(240.0f);
-    ImGui::SliderInt(c_xor("Fov"), &config->ragebot.fov, 0, 180, "%d", ImGuiSliderFlags_Logarithmic);
+    ImGui::SliderInt(c_xor("Fov"), &config->ragebot.ragefov, 0, 180, "%d", ImGuiSliderFlags_Logarithmic);
     ImGui::SliderInt(c_xor("Hitchance"), &config->rageBot[currentCategory].hitChance, 0, 100, "%d");
     ImGui::SliderInt(c_xor("Multipoint Head"), &config->rageBot[currentCategory].multiPointHead, 0, 100, "%d");
     ImGui::SliderInt(c_xor("Multipoint Body"), &config->rageBot[currentCategory].multiPointBody, 0, 100, "%d");
@@ -365,15 +365,6 @@ void GUI::renderRageAntiAimWindow() noexcept
     ImGui::Columns(1);
 }
 
-void GUI::renderFakeAngleWindow() noexcept
-{
-    ImGui::Columns(2, nullptr, false);
-    ImGui::SetColumnOffset(1, 300.f);
-    
-
-    ImGui::NextColumn();
-    ImGui::Columns(1);
-}
 
 void GUI::renderBacktrackWindow() noexcept
 {
@@ -1958,7 +1949,6 @@ void GUI::renderGuiStyle() noexcept
                             if (ImGui::Button("Main                    ", ImVec2{ 80, 20 })) activeSubTabRagebot = 1;
                             if (ImGui::Button("Backtrack               ", ImVec2{ 80, 20 })) activeSubTabRagebot = 2;
                             if (ImGui::Button("AntiAim                 ", ImVec2{ 80, 20 })) activeSubTabRagebot = 3;
-                            if (ImGui::Button("Fake Angle              ", ImVec2{ 80, 20 })) activeSubTabRagebot = 4;
                             if (ImGui::Button("FakeLag                 ", ImVec2{ 80, 20 })) activeSubTabRagebot = 5;
                             break;
                         case 2: //Visuals
@@ -2005,7 +1995,7 @@ void GUI::renderGuiStyle() noexcept
                                     break;
                                 case 4:
                                     //Fake Angle
-                                    renderFakeAngleWindow();
+                                    
                                     break;
                                 case 5:
                                     //FakeLag
