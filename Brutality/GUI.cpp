@@ -427,7 +427,7 @@ void GUI::renderChamsWindow() noexcept
     ImGui::Separator();
     ImGui::Checkbox("Health based", &chams.healthBased);
     ImGui::Checkbox("Blinking", &chams.blinking);
-    ImGui::Combo("Material", &chams.material, "Normal\0Flat\0Animated\0Platinum\0Glass\0Chrome\0Crystal\0Silver\0Gold\0Plastic\0Glow\0Pearlescent\0Metallic\0Smoke Light\0Smoke Dark\0Water\0Bush\0MP3 Detail\0Snowflakes\0");
+    ImGui::Combo("Material", &chams.material, "Normal\0Flat\0Animated\0Platinum\0Glass\0Chrome\0Crystal\0Silver\0Gold\0Plastic\0Glow\0Pearlescent\0Metallic\0Smoke Light\0Smoke Dark\0Water\0Bush\0MP3 Detail\0Snowflakes\0Elixir\0Embers\0Wireclouds\0Seafoam\0Skyline\0Holowarp\0Cobweb\0Ghost\0Night horizon\0Tinfoil\0");
     ImGui::Checkbox("Wireframe", &chams.wireframe);
     ImGui::Checkbox("Cover", &chams.cover);
     ImGui::Checkbox("Ignore-Z", &chams.ignorez);

@@ -41,6 +41,16 @@ static Material* melt;
 static Material* leaves;
 static Material* lines;
 static Material* snowflakes;
+static Material* elixir;
+static Material* embers;
+static Material* wireclouds;
+static Material* seafoam;
+static Material* city;
+static Material* holowarp;
+static Material* cobweb;
+static Material* ghost;
+static Material* horizon;
+static Material* tinfoil;
 
 static constexpr auto dispatchMaterial(int id) noexcept
 {
@@ -65,6 +75,16 @@ static constexpr auto dispatchMaterial(int id) noexcept
     case 16: return leaves;
     case 17: return lines;
     case 18: return snowflakes;
+    case 19: return elixir;
+    case 20: return embers;
+    case 21: return wireclouds;
+    case 22: return seafoam;
+    case 23: return city;
+    case 24: return holowarp;
+    case 25: return cobweb;
+    case 26: return ghost;
+    case 27: return horizon;
+    case 28: return tinfoil;
     }
 }
 
@@ -82,9 +102,18 @@ static void initializeMaterials() noexcept
     leaves = interfaces->materialSystem->createMaterial("leaves", KeyValues::fromString("VertexLitGeneric", "$basetexture models/props_foliage/urban_tree03_branches $translucent 1"));
     lines = interfaces->materialSystem->createMaterial("lines", KeyValues::fromString("VertexLitGeneric", "$basetexture models/inventory_items/music_kit/darude_01/mp3_detail $additive 1 proxies { texturescroll { texturescrollvar $basetexturetransform texturescrollrate 0.25 texturescrollangle 90 } }"));
     snowflakes = interfaces->materialSystem->createMaterial("snowflakes", KeyValues::fromString("VertexLitGeneric", "$basetexture dev/snowfield $additive 1 proxies { texturescroll { texturescrollvar $basetexturetransform texturescrollrate 0.1 } }"));
-
+    elixir = interfaces->materialSystem->createMaterial("elixir", KeyValues::fromString("VertexLitGeneric", "$basetexture VGUI/white_additive $additive 1 proxies { texturescroll { texturescrollvar $basetexturetransform texturescrollrate 0.25 texturescrollangle 0 } }"));
+    embers = interfaces->materialSystem->createMaterial("embers", KeyValues::fromString("VertexLitGeneric", "$basetexture effects/fire_embers3 $vertexcolor 1 $vertexalpha 1 $translucent 3 $additive 1 proxies { texturescroll { texturescrollvar $basetexturetransform texturescrollrate 0.6 texturescrollangle 120 } }"));
+    wireclouds = interfaces->materialSystem->createMaterial("wireclouds", KeyValues::fromString("VertexLitGeneric", "$basetexture sprites/light_glow04 $alpha 1 $envmaptint [1 1 1] $envmapfresnel 1 $envmapcontrast 0.2 $additive 1 proxies { texturescroll { texturescrollvar $basetexturetransform texturescrollrate 0.6 texturescrollangle 120 } }"));
+    seafoam = interfaces->materialSystem->createMaterial("seafoam", KeyValues::fromString("unlitwotexture", "$basetexture nature/coop_sea_foam01 $texture2 nature/coop_sea_foam02 $translucent 1 $additive 1 $nofog 1 proxies { texturescroll { texturescrollvar $basetexturetransform texturescrollrate 0.06 texturescrollangle -80 texturescale 0.7 } texturescroll { texturescrollvar $texture2transform texturescrollrate 0.035 texturescrollangle -110 texturescale 0.3 } }"));
+    city = interfaces->materialSystem->createMaterial("city", KeyValues::fromString("UnlitGeneric", "$basetexture de_vertigo/vertigo_buildingskyline_bk $translucent 1"));
+    holowarp = interfaces->materialSystem->createMaterial("carpet", KeyValues::fromString("weapondecal", "$basetexture models/weapons/customization/stickers/default/holowarp_red $translucent 1 $decalstyle 3 $additive 1 proxies { texturescroll { texturescrollvar $basetexturetransform texturescrollrate 0.2 texturescale 0.4 } }"));
+    cobweb = interfaces->materialSystem->createMaterial("cobweb", KeyValues::fromString("LightmappedGeneric", "$basetexture nature/cobweb00 $translucent 1 $nocull 1"));
+    ghost = interfaces->materialSystem->createMaterial("ghost", KeyValues::fromString("UnLitGeneric", "$basetexture models/effects/ghosts/ghost $additive 1 $color 0.005 $enableshadows 0"));
+    horizon = interfaces->materialSystem->createMaterial("computer", KeyValues::fromString("unlitgeneric", "$basetexture skybox/night_horizon_fade $translucent 1 $color [.5 .5 .5] $nofog 1"));
+    tinfoil = interfaces->materialSystem->createMaterial("tinfoil", KeyValues::fromString("VertexLitGeneric", "$basetexture models/inventory_items/hydra_silver/hydra_silver_detail_diffuse $bumpmap models/inventory_items/hydra_gold/hydra_gold_detail_normal $phongexponenttexture models/inventory_items/hydra_gold/hydra_detail_exponent $translucent 1 $allowfencerenderstatehack 1 $alpha .55 $envmap models/effects/crystal_cube_vertigo_hdr $envmaptint [0.7 0.92 0.6] $envmapsaturation 0.1 $envmapfresnel 0 $phong 1 $phongexponen 36 $phongtint [0.2 0.5 0.5] $phongboost 7"));
     {
-        const auto kv = KeyValues::fromString("VertexLitGeneric", "$envmap editor/cube_vertigo $envmapcontrast 1 $basetexture dev/zone_warning proxies { texturescroll { texturescrollvar $basetexturetransform texturescrollrate 0.6 texturescrollangle 90 } }");
+        const auto kv = KeyValues::fromString("VertexLitGeneric", "$envmap editor/cube_vertigo $envmapcontrast 1 $basetexture dev/zone_warning proxies { texturescroll { texturescrollvar $bumptransform texturescrollrate 0.6 texturescrollangle 90 } }");
         kv->setString("$envmaptint", "[.7 .7 .7]");
         animated = interfaces->materialSystem->createMaterial("animated", kv);
     }

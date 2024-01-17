@@ -357,22 +357,25 @@ void AntiAim::rage(UserCmd* cmd, const Vector& previousViewAngles, const Vector&
                     {
                         yaw -= config->rageAntiAim[Condition::getState(cmd)].jitterRange;
                         cmd->viewangles.x = -89.f;
+                        cmd->viewangles.x = 89.f;
                         stage = 1;
                     }
                     else if (stage == 1)
                     {
                         yaw += 0;
-                        cmd->viewangles.x = 0.f;
+                        cmd->viewangles.x = -89.f;
+                        cmd->viewangles.x = 89.f;
                         stage = 2;
                     }
                     else if (stage == 2)
                     {
                         yaw += config->rageAntiAim[Condition::getState(cmd)].jitterRange;
+                        cmd->viewangles.x = -89.f;
                         cmd->viewangles.x = 89.f;
                         stage = 0;
                     }
                     else
-                        stage = 0; //fix for invalid stage
+                        stage = 0; //for invalid nigger balls
                 }
                 break;
             default:
